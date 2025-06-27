@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean, integer,  pgEnum } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, integer, pgEnum } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 // Better auth
 export const user = pgTable("user", {
@@ -64,4 +64,13 @@ export const transactionAccounts = pgTable("transactions_account", {
 
 });
 
-export const insertTrAccountSchema=createInsertSchema(transactionAccounts)
+export const insertTrAccountSchema = createInsertSchema(transactionAccounts)
+
+// TODO: Implement fields like color icons,isdefault etc
+export const categories = pgTable("categories", {
+	id: text("id").primaryKey(),
+	name: text("name").notNull(),
+	userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" })
+
+});
+export const insertCategorySchema = createInsertSchema(transactionAccounts)
