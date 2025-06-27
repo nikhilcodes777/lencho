@@ -1,5 +1,6 @@
-import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
-
+import { pgTable, text, timestamp, boolean, integer,  pgEnum } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
+// Better auth
 export const user = pgTable("user", {
 	id: text('id').primaryKey(),
 	name: text('name').notNull(),
@@ -45,3 +46,22 @@ export const verification = pgTable("verification", {
 	createdAt: timestamp('created_at').$defaultFn(() => /* @__PURE__ */ new Date()),
 	updatedAt: timestamp('updated_at').$defaultFn(() => /* @__PURE__ */ new Date())
 });
+
+// Other
+
+export const accountTypeEnum = pgEnum('AccountType', [
+	'CHECKING',
+	'SAVINGS',
+	'CASH',
+	'CREDIT_CARD',
+]);
+export const transactionAccounts = pgTable("transactions_account", {
+	id: text("id").primaryKey(),
+	name: text("name").notNull(),
+	balance: integer("balance").notNull().default(1000),
+	type: accountTypeEnum("type").notNull().default("CASH"),
+	userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" })
+
+});
+
+export const insertTrAccountSchema=createInsertSchema(transactionAccounts)
