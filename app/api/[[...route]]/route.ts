@@ -19,7 +19,8 @@ const app = new Hono<AppType>().basePath('/api')
     return await next();
   })
 
-export const routes = app
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const routes = app
   .route("/auth", authRoutes)
   .route("/account", accountRoutes)
 export const GET = handle(app)
@@ -32,3 +33,4 @@ export type AppType = {
     session: typeof auth.$Infer.Session.session | null
   }
 }
+export type RouteType = typeof routes
