@@ -3,9 +3,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-
-
-
 :root {
   --background: #f8f7fa;
   --foreground: #3c3d4f;
@@ -157,7 +154,6 @@
     0px 0px 0px 1px rgba(25, 28, 33, 0.08);
 }
 
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -167,5 +163,4 @@
     @apply bg-background text-foreground;
   }
 }
-
 
